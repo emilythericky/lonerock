@@ -1,0 +1,809 @@
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Courier+Prime:ital@0;1&display=swap');
+
+:root {
+  /* ── WATER (surface) — dark water, blues, translucency ─────── */
+  --bg: #05080d;
+  --deep-water: #07111c;
+  --water-dark: #0a1c2e;
+  --water-mid: #103247;
+  --water-light: #1b5673;
+  --water-bright: #2f86ad;
+  --surface-water: rgba(28, 86, 120, 0.32);
+
+  /* ── MINE / DEPTH — coal, carbide, fire, sediment ─────────── */
+  --stone: #14161c;
+  --shale: #1a1c22;
+  --coal: #0a0a0d;
+  --limestone: #232730;
+  --clay: #2c2114;
+  --sediment: #2a2418;
+  --carbide: #f0a63c;      /* carbide-lamp flame */
+  --carbide-dim: #6a4416;
+  --ember: #c9491f;        /* mine fire */
+  --rust: #8a4a2a;
+
+  --text: #cdd7dd;
+  --text-muted: #6d7d88;
+  --text-dim: #313e47;
+  --text-water: #9cc3d8;
+
+  --ochre: #d89a4a;        /* carbide warmth for headings */
+  --ochre-dim: #5a3c14;
+  --ash: #5a6670;
+  --ash-light: #93a3ad;
+
+  /* watery accents (replace the old greens) */
+  --water-green: #3f8fb0;
+  --pond-green: rgba(40, 110, 150, 0.5);
+  --algae: #2f7da3;
+  --lichen: #4a6f80;
+  --usnea: rgba(150, 188, 205, 0.42);
+
+  --thread: rgba(70, 140, 185, 0.32);
+  --thread-bright: rgba(120, 195, 235, 0.6);
+
+  --border: rgba(60, 100, 125, 0.2);
+  --border-strong: rgba(90, 150, 180, 0.32);
+
+  --panel-bg: #081019;
+  --geology-bg: #0a0805;
+  --geology-layer-1: #11100c;
+  --geology-layer-2: #161310;
+  --geology-layer-3: #1e1a14;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Cormorant Garamond', 'Palatino Linotype', Georgia, serif;
+  font-weight: 300;
+  line-height: 1.85;
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ── MEMBRANE / LANDING ──────────────────────────────── */
+
+#membrane {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 24px 60px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 30% 60%, #0c2031 0%, #05080d 62%);
+}
+
+#membrane::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(40, 90, 120, 0.035) 3px,
+      rgba(40, 90, 120, 0.035) 4px
+    );
+  pointer-events: none;
+}
+
+/* Water surface ripple effect */
+#membrane::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(40, 110, 150, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.membrane-inner {
+  max-width: 680px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.title-block {
+  margin-bottom: 3.5rem;
+}
+
+h1.project-title {
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: normal;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  color: var(--ochre);
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.project-subtitle {
+  color: var(--text-muted);
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.intro-text p {
+  margin-bottom: 1.7rem;
+  font-size: 1.08rem;
+  color: var(--text);
+  font-weight: 300;
+}
+
+.intro-text em {
+  font-style: italic;
+  color: #c4b898;
+}
+
+.intro-text .coda {
+  color: var(--ochre);
+  font-style: italic;
+  font-size: 1.05rem;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  border-left: 1px solid var(--ochre-dim);
+  padding-left: 1.2rem;
+}
+
+.epigraph {
+  margin-bottom: 3rem;
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--border-strong);
+}
+
+.epigraph p {
+  font-size: 0.95rem !important;
+  color: var(--text-muted) !important;
+  font-style: italic;
+  margin-bottom: 0.3rem !important;
+}
+
+.epigraph .attribution {
+  font-size: 0.8rem !important;
+  color: var(--text-dim) !important;
+  font-style: normal;
+  font-family: 'Courier Prime', monospace;
+  letter-spacing: 0.05em;
+}
+
+.enter-zone {
+  margin-top: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.enter-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-family: 'Courier Prime', monospace;
+}
+
+.enter-btn {
+  background: none;
+  border: 1px solid var(--border-strong);
+  color: var(--water-bright);
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  padding: 0.85rem 1.8rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  letter-spacing: 0.03em;
+  position: relative;
+  overflow: hidden;
+}
+
+.enter-btn::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: rgba(40, 110, 150, 0.14);
+  transition: height 0.3s ease;
+}
+
+.enter-btn:hover {
+  border-color: var(--water-bright);
+  color: #7fd0ec;
+}
+
+.enter-btn:hover::before {
+  height: 100%;
+}
+
+/* ── LAKE VIEW ───────────────────────────────────────── */
+
+#lake-view {
+  display: none;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 38% 42%, #11324a 0%, transparent 55%),
+    radial-gradient(ellipse at 72% 70%, #0a2235 0%, transparent 60%),
+    linear-gradient(180deg, #081a28 0%, #04080e 85%);
+  overflow: hidden;
+}
+
+#lake-view.visible { display: block; }
+
+/* Water caustics overlay */
+#lake-view::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(60, 150, 200, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 65%, rgba(40, 110, 160, 0.07) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 80%, rgba(50, 130, 175, 0.04) 0%, transparent 40%);
+  pointer-events: none;
+  animation: caustic-shift 14s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes caustic-shift {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+#lake-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Nav overlay */
+.lake-nav {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 50;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.back-link {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-style: italic;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.back-link:hover { color: var(--ochre); }
+
+.view-hint {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--text-dim);
+  font-size: 0.72rem;
+  font-family: 'Courier Prime', monospace;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  z-index: 50;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* ── LAKE NODES (SVG elements, styled via CSS) ──────── */
+
+.pond-body {
+  cursor: pointer;
+}
+
+/* the translucent water body — outline is the word ring */
+.pond-water {
+  stroke: rgba(120, 190, 225, 0.28);
+  stroke-width: 1;
+  transition: opacity 0.4s ease;
+  opacity: 0.92;
+}
+
+.pond-body:hover .pond-water {
+  opacity: 1;
+  stroke: rgba(150, 215, 245, 0.5);
+}
+
+/* soft glow aura beneath the water */
+.pond-aura {
+  fill: rgba(40, 120, 165, 0.10);
+  pointer-events: none;
+}
+
+.pond-body:hover .pond-aura { fill: rgba(60, 150, 200, 0.16); }
+
+.pond-label {
+  fill: var(--text-water);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-weight: 300;
+  font-style: italic;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.pond-sublabel {
+  fill: var(--text-muted);
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  text-anchor: middle;
+  pointer-events: none;
+  letter-spacing: 0.1em;
+}
+
+/* boundary words — the pond's rim. draggable to reshape, clickable to dive */
+.boundary-word {
+  fill: var(--text-water);
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 12px;
+  font-style: italic;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: all;
+  cursor: grab;
+  opacity: 0.82;
+  transition: fill 0.25s, opacity 0.25s;
+  user-select: none;
+  paint-order: stroke;
+  stroke: rgba(6, 16, 26, 0.85);
+  stroke-width: 2.4px;
+}
+
+.boundary-word:hover { opacity: 1; fill: #cfecfb; }
+.boundary-word.dragging { cursor: grabbing; fill: #e8f6ff; opacity: 1; }
+
+.drainage-thread {
+  fill: none;
+  stroke: var(--thread);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.drainage-thread-glow {
+  fill: none;
+  stroke: var(--thread-bright);
+  stroke-width: 0.5;
+  stroke-linecap: round;
+  opacity: 0.3;
+}
+
+/* Mycelial / usnea filaments stitching word-end → next word-start */
+.filament {
+  fill: none;
+  stroke: var(--usnea);
+  stroke-width: 1;
+  stroke-linecap: round;
+  pointer-events: none;
+  opacity: 0.72;
+}
+
+.pond-body:hover .filament { opacity: 0.95; stroke: rgba(185, 220, 235, 0.7); }
+
+/* usnea fruiting tips where the first/last letters meet */
+.fruiting-tip {
+  fill: rgba(175, 208, 222, 0.65);
+  pointer-events: none;
+}
+
+.pond-body:hover .fruiting-tip { fill: rgba(205, 235, 250, 0.85); }
+
+/* Ripple rings */
+.ripple-ring {
+  fill: none;
+  stroke: rgba(110, 185, 225, 0.16);
+  stroke-width: 0.5;
+  animation: ripple-out 4s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes ripple-out {
+  0% { r: 0; opacity: 0.4; }
+  100% { r: 80; opacity: 0; }
+}
+
+/* ── GEOLOGY PANEL ───────────────────────────────────── */
+
+#geology-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 560px;
+  max-width: 100vw;
+  height: 100vh;
+  background: var(--panel-bg);
+  border-left: 1px solid var(--border);
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 100;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: flex;
+  flex-direction: column;
+}
+
+#geology-panel.open {
+  transform: translateX(0);
+  box-shadow: -20px 0 80px rgba(0, 0, 0, 0.7);
+}
+
+/* Panel header */
+.panel-header {
+  padding: 2.5rem 2rem 0;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+  position: sticky;
+  top: 0;
+  background: var(--panel-bg);
+  z-index: 10;
+}
+
+.panel-close {
+  position: absolute;
+  top: 1.3rem;
+  right: 1.3rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.3rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem;
+  transition: color 0.2s;
+  font-family: 'Courier Prime', monospace;
+}
+
+.panel-close:hover { color: var(--text); }
+
+.panel-node-title {
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 1.7rem;
+  font-weight: normal;
+  font-style: italic;
+  color: var(--ochre);
+  margin-bottom: 0.3rem;
+  padding-right: 2.5rem;
+  line-height: 1.2;
+}
+
+.panel-node-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-family: 'Courier Prime', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+/* Descent hint under header */
+.descent-hint {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.descent-hint::after {
+  content: '↓';
+  font-size: 0.8rem;
+  animation: sink 2.2s ease-in-out infinite;
+}
+
+@keyframes sink {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(3px); opacity: 0.8; }
+}
+
+/* ── VERTICAL GEOLOGIC DESCENT ───────────────────────── */
+/* The panel body is a single column you sink through:
+   water → sediment → coal measure → limestone → bedrock archive.
+   Content deepens and turns documentary as you go down. */
+
+.panel-body {
+  flex: 1;
+  position: relative;
+  display: flex;
+}
+
+/* Core-sample depth gauge pinned to the left edge */
+.core-gauge {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  width: 14px;
+  height: 100vh;
+  flex-shrink: 0;
+  background: linear-gradient(
+    180deg,
+    #1b5673 0%,           /* surface water */
+    #103247 12%,
+    #0a1c2e 20%,          /* dark water */
+    #2c2114 30%,          /* sediment / clay */
+    #1a1206 46%,
+    #0a0a0d 58%,          /* coal seam */
+    #c9491f 70%,          /* mine fire / carbide flame */
+    #6a4416 80%,
+    #0a0805 100%          /* bedrock */
+  );
+  border-right: 1px solid var(--border);
+  z-index: 5;
+}
+
+.core-gauge::after {
+  /* striated mineral lines over the gradient */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 11px,
+    rgba(0,0,0,0.35) 11px,
+    rgba(0,0,0,0.35) 12px
+  );
+  mix-blend-mode: multiply;
+}
+
+.strata-column {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Each stratum is a band you scroll through */
+.stratum {
+  padding: 2.2rem 2rem 2.4rem;
+  position: relative;
+}
+
+.stratum-tag {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1.4rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+}
+
+.stratum-tag .depth-num {
+  color: var(--ochre-dim);
+}
+
+.stratum-tag::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Stratum 1 — WATER (the poem) */
+.stratum.water {
+  background: linear-gradient(180deg, #0d2a3e 0%, var(--water-dark) 60%, var(--panel-bg) 100%);
+}
+
+.stratum.water .stratum-body {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.06rem;
+  font-weight: 300;
+  line-height: 2;
+  color: var(--text);
+  white-space: pre-wrap;
+}
+
+.stratum.water em { font-style: italic; color: #c4b898; }
+.stratum.water strong { font-weight: 400; color: var(--text-water); }
+
+/* Stratum 2 — SEDIMENT / GEOLOGY (the essay) — water silts into clay & coal */
+.stratum.sediment {
+  background: linear-gradient(180deg, var(--panel-bg) 0%, #1a160e 35%, var(--coal) 100%);
+}
+
+.stratum.sediment .stratum-body p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.99rem;
+  font-weight: 300;
+  line-height: 1.92;
+  color: var(--text);
+  margin-bottom: 1.4rem;
+}
+
+.stratum.sediment em { font-style: italic; color: #b8a888; }
+
+/* Stratum 3 — BEDROCK (the archive) — coal seam, carbide-flame glow, then bedrock */
+.stratum.bedrock {
+  background:
+    radial-gradient(ellipse at 15% 8%, rgba(201, 73, 31, 0.13) 0%, transparent 38%),
+    linear-gradient(180deg, var(--coal) 0%, #120a05 30%, var(--geology-bg) 100%);
+  min-height: 40vh;
+}
+
+.stratum.bedrock .stratum-body p {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.81rem;
+  line-height: 1.78;
+  color: var(--text-muted);
+  margin-bottom: 1.2rem;
+}
+
+.stratum.bedrock .stratum-body strong {
+  display: block;
+  color: var(--ash-light);
+  margin-top: 1.8rem;
+  margin-bottom: 0.5rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.92rem;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.4rem;
+}
+
+.stratum.bedrock .stratum-body p:first-child strong { margin-top: 0; }
+
+/* ── ERASURE / REDACTION ─────────────────────────────── */
+/* del (~~text~~) = struck, faint. [[text]] = blacked-out bar,
+   the adversarial editorial hand. Hover faintly reveals — the
+   reading-between-the-lines the work asks for. */
+
+.stratum-body del,
+.stratum-body s {
+  text-decoration: line-through;
+  text-decoration-color: rgba(180,120,60,0.6);
+  color: var(--text-dim);
+  opacity: 0.65;
+}
+
+.redacted {
+  background: #0c0a07;
+  color: transparent;
+  padding: 0 0.15em;
+  border-radius: 1px;
+  user-select: none;
+  transition: color 0.6s ease, background 0.6s ease;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.6);
+}
+
+.redacted:hover {
+  color: rgba(120,110,90,0.4);
+  background: #100d09;
+}
+
+/* The archive-silence gap — a held empty space, like Mine G's ( ) */
+.archive-gap {
+  display: block;
+  min-height: 4.5rem;
+  border-left: 1px solid var(--border);
+  margin: 1.6rem 0 1.6rem 0.2rem;
+}
+
+/* ── FOUND TEXT / MRS. GRUNDY CLIPPINGS ──────────────── */
+/* Parataxis: the periodical's banal white-community news set
+   beside the convict record. A torn newspaper scrap. */
+
+.clipping {
+  background: linear-gradient(160deg, #2a2519 0%, #221d13 100%);
+  border: 1px solid rgba(120,100,60,0.25);
+  padding: 1rem 1.1rem 0.9rem;
+  margin: 1.8rem 0;
+  font-family: 'Cormorant Garamond', serif;
+  color: #b8aa86;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  box-shadow: 3px 4px 14px rgba(0,0,0,0.5);
+  transform: rotate(-0.6deg);
+  position: relative;
+}
+
+.clipping::before {
+  /* torn top edge */
+  content: '';
+  position: absolute;
+  top: -1px; left: 0; right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(90deg,
+    #2a2519 0 3px, transparent 3px 6px);
+}
+
+.clipping .clipping-head {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: #c9b88e;
+  display: block;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(120,100,60,0.2);
+  padding-bottom: 0.4rem;
+}
+
+.clipping .clipping-source {
+  display: block;
+  margin-top: 0.7rem;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+/* ── SCROLLBAR ───────────────────────────────────────── */
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--water-green); opacity: 0.3; border-radius: 2px; }
+
+/* ── LOADING STATE ───────────────────────────────────── */
+
+.loading-shimmer {
+  color: var(--text-dim);
+  font-style: italic;
+  font-size: 0.9rem;
+  padding: 2rem;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  #geology-panel {
+    width: 100vw;
+    height: 65vh;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: 1px solid var(--border);
+    transform: translateY(100%);
+  }
+
+  #geology-panel.open {
+    transform: translateY(0);
+    box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.7);
+  }
+
+  #membrane { padding: 60px 20px 40px; }
+  h1.project-title { font-size: 2.2rem; }
+}

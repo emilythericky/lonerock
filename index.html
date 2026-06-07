@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mrs. Grundy Lone Rock</title>
+  <meta name="description" content="A deep map of the Lone Rock Stockade, Grundy County, Tennessee — lyric, geology, water, and the afterlives of chattel slavery in Appalachia.">
+  <meta name="theme-color" content="#0a0d0b">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── MEMBRANE ─────────────────────────────────────── -->
+
+<section id="membrane">
+  <div class="membrane-inner">
+
+    <div class="epigraph">
+      <p>The compliant survive</p>
+      <p>as if that were the only</p>
+      <p>object (The soul</p>
+      <p class="attribution">— Mrs. Grundy Lone Rock</p>
+    </div>
+
+    <div class="title-block">
+      <h1 class="project-title">Mrs. Grundy Lone Rock</h1>
+      <p class="project-subtitle">A deep map · Grundy County, Tennessee</p>
+    </div>
+
+    <div class="intro-text">
+
+      <p>The Lone Rock Stockade was built in 1883 by the Tennessee Coal, Iron and Railroad Company outside Tracy City, Grundy County, Tennessee. It was the largest purpose-built private convict labor prison system in the state. Between 1884 and 1896 it held at least 3,500 individuals, over 75% of whom were categorized as Black, convicted of crimes such as vagrancy, loitering, spitting — convicted into a system designed to convert the newly emancipated into unfree labor through the exception the Thirteenth Amendment left open, deliberately, like a wound.</p>
+
+      <p>The wealth produced here endowed Sewanee: The University of the South, founded by bishops and generals of the Confederacy. The coke ovens ran. The men worked and died in the mines and were buried in unmarked ground where sycamore trees have since grown and incorporated them — literally, molecularly — into the fungal networks of the South Cumberland Plateau.</p>
+
+      <p>The stockade is now a state park. The tailings ponds are now swimming holes. We find morels there in spring. We find artifacts, fossils. We go out to make sounds with instruments, and to say the names of the men who were forced to labor there — the names we have, which are not all of them.</p>
+
+      <p>This is a lyric deep map of that place and its afterlives. It takes the shape of the lake system it documents. The surface is water, poem, rearrangeable fragment. The depth is geology — stratigraphy — essay, document, testimony, the archive and its silences.</p>
+
+      <p class="coda">The ponds are not closed systems. What went in is still in there, cycling.</p>
+
+    </div>
+
+    <div class="enter-zone">
+      <span class="enter-label">Descend</span>
+      <button class="enter-btn" id="enter-btn">Enter the Watershed</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── LAKE VIEW ──────────────────────────────────────── -->
+
+<div id="lake-view">
+
+  <nav class="lake-nav">
+    <a href="#" class="back-link" id="back-link">← the membrane</a>
+  </nav>
+
+  <svg id="lake-svg"></svg>
+
+  <p class="view-hint">drag ponds to re-route the flow · drag words to reshape the shore · click to descend</p>
+
+</div>
+
+<!-- ── GEOLOGY PANEL ──────────────────────────────────── -->
+
+<div id="geology-panel">
+
+  <div class="panel-header">
+    <button class="panel-close" id="panel-close" aria-label="Close">×</button>
+    <h2 class="panel-node-title" id="panel-title"></h2>
+    <p class="panel-node-subtitle" id="panel-subtitle"></p>
+    <span class="descent-hint">sink through the strata</span>
+  </div>
+
+  <div class="panel-body">
+    <div class="core-gauge" aria-hidden="true"></div>
+    <div class="strata-column" id="strata-column">
+      <section class="stratum water">
+        <div class="stratum-tag"><span class="depth-num">0 m</span> surface · water</div>
+        <div class="stratum-body" id="stratum-water"></div>
+      </section>
+      <section class="stratum sediment">
+        <div class="stratum-tag"><span class="depth-num">—</span> sediment · the argument</div>
+        <div class="stratum-body" id="stratum-sediment"></div>
+      </section>
+      <section class="stratum bedrock">
+        <div class="stratum-tag"><span class="depth-num">▼</span> bedrock · the archive</div>
+        <div class="stratum-body" id="stratum-bedrock"></div>
+      </section>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── SCRIPTS ────────────────────────────────────────── -->
+<!-- d3 and marked are vendored locally (lib/) so the project runs
+     anywhere with zero external dependencies, online or off. -->
+<script src="lib/d3.min.js"></script>
+<script src="lib/marked.min.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>
