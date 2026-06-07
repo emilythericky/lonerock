@@ -117,123 +117,226 @@ body {
   width: 100%;
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .title-block {
-  margin-bottom: 3.5rem;
+  margin-bottom: 2.6rem;
 }
 
 h1.project-title {
   font-family: 'IM Fell English', Georgia, serif;
-  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-size: clamp(1.9rem, 4.4vw, 3rem);
   font-weight: normal;
   font-style: italic;
   letter-spacing: 0.01em;
-  color: var(--ochre);
+  color: var(--text-water);
   line-height: 1.1;
   margin-bottom: 0.5rem;
+  opacity: 0.92;
 }
 
 .project-subtitle {
   color: var(--text-muted);
   font-family: 'Courier Prime', monospace;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
-.intro-text p {
-  margin-bottom: 1.7rem;
-  font-size: 1.08rem;
+/* ── THE LACUNA — a blue hole you fall through ───────── */
+
+.lacuna-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.lacuna {
+  position: relative;
+  width: clamp(210px, 36vw, 360px);
+  height: clamp(210px, 36vw, 360px);
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  /* deep water sinkhole: lit rim, dark falling centre */
+  background:
+    radial-gradient(circle at 50% 42%,
+      #03070c 0%,
+      #061320 34%,
+      #0c2c41 66%,
+      rgba(35, 96, 128, 0.55) 86%,
+      rgba(60, 150, 195, 0.18) 100%);
+  box-shadow:
+    inset 0 8px 60px rgba(0, 0, 0, 0.85),
+    inset 0 -4px 30px rgba(40, 110, 150, 0.2),
+    0 0 70px rgba(24, 70, 100, 0.35);
+  animation: lacuna-breathe 7s ease-in-out infinite;
+  transition: box-shadow 0.6s ease, transform 0.6s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* slow caustic shimmer rotating over the surface */
+.lacuna::before {
+  content: '';
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  background:
+    conic-gradient(from 0deg,
+      transparent 0deg,
+      rgba(90, 170, 210, 0.10) 60deg,
+      transparent 120deg,
+      rgba(70, 150, 195, 0.08) 200deg,
+      transparent 280deg,
+      rgba(110, 190, 225, 0.10) 340deg,
+      transparent 360deg);
+  mix-blend-mode: screen;
+  animation: lacuna-spin 22s linear infinite;
+  pointer-events: none;
+}
+
+.lacuna:hover {
+  box-shadow:
+    inset 0 10px 80px rgba(0, 0, 0, 0.9),
+    inset 0 -4px 36px rgba(50, 130, 175, 0.28),
+    0 0 100px rgba(40, 110, 155, 0.5);
+  transform: scale(1.03);
+}
+
+.lacuna:focus-visible {
+  outline: 1px solid rgba(120, 190, 225, 0.5);
+  outline-offset: 14px;
+}
+
+/* emanating ripple rings */
+.ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(120, 190, 225, 0.4);
+  pointer-events: none;
+  animation: lacuna-ripple 5s ease-out infinite;
+}
+
+.ripple:nth-child(2) { animation-delay: 2.5s; }
+
+.lacuna-caption {
+  font-family: 'IM Fell English', Georgia, serif;
+  font-style: italic;
+  font-size: 1rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  text-transform: lowercase;
+  transition: color 0.4s ease, letter-spacing 0.4s ease;
+}
+
+.lacuna-wrap:hover .lacuna-caption {
+  color: #9fd4ec;
+  letter-spacing: 0.26em;
+}
+
+@keyframes lacuna-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.018); }
+}
+
+@keyframes lacuna-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes lacuna-ripple {
+  0% { transform: scale(0.92); opacity: 0.55; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+
+/* ── ABOUT — optional, tucked away ───────────────────── */
+
+.about {
+  margin-top: 3.2rem;
+  max-width: 600px;
+  width: 100%;
+  text-align: left;
+}
+
+.about-toggle {
+  list-style: none;
+  cursor: pointer;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.6rem 0;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.about-toggle::-webkit-details-marker { display: none; }
+.about-toggle:hover { color: var(--water-bright); }
+
+.about-toggle::after {
+  content: ' +';
+  color: var(--border-strong);
+}
+.about[open] .about-toggle::after { content: ' −'; }
+
+.about-body {
+  margin-top: 1.8rem;
+  animation: about-fade 0.6s ease;
+}
+
+@keyframes about-fade {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.about-body p {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
   color: var(--text);
   font-weight: 300;
 }
 
-.intro-text em {
-  font-style: italic;
-  color: #c4b898;
-}
+.about-body em { font-style: italic; color: #b8cdd8; }
 
-.intro-text .coda {
-  color: var(--ochre);
+.about-body .coda {
+  color: var(--water-bright);
   font-style: italic;
-  font-size: 1.05rem;
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
-  border-left: 1px solid var(--ochre-dim);
+  font-size: 1rem;
+  margin-top: 2.2rem;
+  margin-bottom: 1rem;
+  border-left: 1px solid var(--border-strong);
   padding-left: 1.2rem;
 }
 
 .epigraph {
-  margin-bottom: 3rem;
+  margin-bottom: 2.4rem;
   padding-left: 1.5rem;
   border-left: 1px solid var(--border-strong);
 }
 
 .epigraph p {
-  font-size: 0.95rem !important;
+  font-size: 0.92rem !important;
   color: var(--text-muted) !important;
   font-style: italic;
   margin-bottom: 0.3rem !important;
 }
 
 .epigraph .attribution {
-  font-size: 0.8rem !important;
+  font-size: 0.78rem !important;
   color: var(--text-dim) !important;
   font-style: normal;
   font-family: 'Courier Prime', monospace;
   letter-spacing: 0.05em;
-}
-
-.enter-zone {
-  margin-top: 3.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.6rem;
-}
-
-.enter-label {
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  font-family: 'Courier Prime', monospace;
-}
-
-.enter-btn {
-  background: none;
-  border: 1px solid var(--border-strong);
-  color: var(--water-bright);
-  font-family: 'IM Fell English', Georgia, serif;
-  font-size: 1.05rem;
-  font-style: italic;
-  padding: 0.85rem 1.8rem;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  letter-spacing: 0.03em;
-  position: relative;
-  overflow: hidden;
-}
-
-.enter-btn::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 0;
-  background: rgba(40, 110, 150, 0.14);
-  transition: height 0.3s ease;
-}
-
-.enter-btn:hover {
-  border-color: var(--water-bright);
-  color: #7fd0ec;
-}
-
-.enter-btn:hover::before {
-  height: 100%;
 }
 
 /* ── LAKE VIEW ───────────────────────────────────────── */
