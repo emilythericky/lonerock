@@ -165,7 +165,9 @@ h1.project-title {
   width: clamp(210px, 70vw, 360px);
   height: clamp(210px, 70vw, 360px);
   border: none;
-  border-radius: 50%;
+  /* organic droplet rim — morphs in @keyframes lacuna-morph */
+  border-radius: 54% 46% 47% 53% / 52% 48% 52% 48%;
+  will-change: border-radius, transform;
   padding: 0;
   cursor: pointer;
   /* deep water sinkhole: lit rim, dark falling centre */
@@ -180,7 +182,7 @@ h1.project-title {
     inset 0 8px 60px rgba(0, 0, 0, 0.85),
     inset 0 -4px 30px rgba(40, 110, 150, 0.2),
     0 0 70px rgba(24, 70, 100, 0.35);
-  animation: lacuna-breathe 7s ease-in-out infinite;
+  animation: lacuna-morph 11s ease-in-out infinite, lacuna-breathe 7s ease-in-out infinite;
   transition: box-shadow 0.6s ease, transform 0.6s ease;
   -webkit-tap-highlight-color: transparent;
 }
@@ -190,7 +192,7 @@ h1.project-title {
   content: '';
   position: absolute;
   inset: 4%;
-  border-radius: 50%;
+  border-radius: inherit;
   background:
     conic-gradient(from 0deg,
       transparent 0deg,
@@ -222,7 +224,7 @@ h1.project-title {
 .ripple {
   position: absolute;
   inset: 0;
-  border-radius: 50%;
+  border-radius: inherit;
   border: 1px solid rgba(120, 190, 225, 0.4);
   pointer-events: none;
   animation: lacuna-ripple 5s ease-out infinite;
@@ -248,6 +250,15 @@ h1.project-title {
 @keyframes lacuna-breathe {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.018); }
+}
+
+/* the droplet rim trembling — a water drop's surface tension */
+@keyframes lacuna-morph {
+  0%, 100% { border-radius: 54% 46% 47% 53% / 52% 48% 52% 48%; }
+  20% { border-radius: 47% 53% 60% 40% / 44% 57% 43% 56%; }
+  40% { border-radius: 60% 40% 44% 56% / 56% 44% 58% 42%; }
+  60% { border-radius: 44% 56% 53% 47% / 47% 54% 46% 54%; }
+  80% { border-radius: 52% 48% 41% 59% / 58% 42% 55% 45%; }
 }
 
 @keyframes lacuna-spin {
