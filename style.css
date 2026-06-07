@@ -157,9 +157,13 @@ h1.project-title {
 }
 
 .lacuna {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: block;
   position: relative;
-  width: clamp(210px, 36vw, 360px);
-  height: clamp(210px, 36vw, 360px);
+  width: clamp(210px, 70vw, 360px);
+  height: clamp(210px, 70vw, 360px);
   border: none;
   border-radius: 50%;
   padding: 0;
