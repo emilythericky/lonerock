@@ -170,7 +170,10 @@ function initLake() {
       d.y = d.y * H;
       d.fx = null; d.fy = null;
       d._phase = i * 1.7 + Math.random() * 6.28;   // drift phase
-      d._boundary = computeBoundary(d, i);
+      d.category = d.category || 'pond';
+      d._rust = (d.id === 'mine-g' || d.id === 'coal-fly-ash');
+      if (d.category === 'creek') d._creekWords = (d.surfaceWords || []).slice(0, 8);
+      else d._boundary = computeBoundary(d, i);   // ponds/pools/mine: word-ring shore
     });
 
     // ── SIMULATION ─────────────────────────────────
@@ -179,12 +182,13 @@ function initLake() {
     // from proximity every few ticks (updateThreads). Drag a pond and it
     // reconnects, rather than towing its old arcs across the others.
     simulation = d3.forceSimulation(data.nodes)
-      .force('charge', d3.forceManyBody().strength(-680))
+      // creeks repel and occupy little — they nestle between the ponds
+      .force('charge', d3.forceManyBody().strength(d => d.category === 'creek' ? -240 : -680))
       .force('center', d3.forceCenter(W / 2, H / 2).strength(0.035))
-      .force('collision', d3.forceCollide(d => d.radius * 1.18 + 46))
+      .force('collision', d3.forceCollide(d => d.category === 'creek' ? 28 : d.radius * 1.18 + 46))
       .force('bounds', () => {
         data.nodes.forEach(d => {
-          const pad = d.radius * 1.18 + 50;
+          const pad = d.category === 'creek' ? 40 : d.radius * 1.18 + 50;
           if (d.x < pad) d.vx += (pad - d.x) * 0.09;
           if (d.x > W - pad) d.vx += (W - pad - d.x) * 0.09;
           if (d.y < pad) d.vy += (pad - d.y) * 0.09;
@@ -210,9 +214,11 @@ function initLake() {
     // ── POND NODES ─────────────────────────────────
     const nodeGroup = svg.append('g').attr('class', 'nodes');
 
-    const ponds = nodeGroup.selectAll('.pond-body')
+    const nodeSel = nodeGroup.selectAll('.pond-body')
       .data(data.nodes).join('g')
-      .attr('class', 'pond-body')
+      .attr('class', d => 'pond-body'
+        + (d.category === 'creek' ? ' creek-body' : '')
+        + (d._rust ? ' rust' : ''))
       .on('click', (event, d) => {
         if (event.defaultPrevented) return;   // a drag happened
         event.stopPropagation();               // don't let svg-bg close it
@@ -220,8 +226,11 @@ function initLake() {
       })
       .call(pondDrag(simulation));
 
-    ponds.each(function (d, i) {
+    nodeSel.each(function (d, i) {
       const g = d3.select(this);
+      d._g = g;
+
+      if (d.category === 'creek') { buildCreek(g, d); return; }
 
       // faint aura under the water
       g.append('ellipse')
@@ -248,7 +257,7 @@ function initLake() {
       g.append('g').attr('class', 'filaments');
 
       // the boundary words themselves
-      const wordSel = g.append('g').attr('class', 'boundary-words')
+      g.append('g').attr('class', 'boundary-words')
         .selectAll('text')
         .data(d._boundary).join('text')
         .attr('class', 'boundary-word')
@@ -265,7 +274,6 @@ function initLake() {
         .attr('dy', d.radius * 1.18 + 34)
         .text(d.subtitle);
 
-      d._g = g;
       redrawPond(d);
     });
 
@@ -275,7 +283,10 @@ function initLake() {
     // ── TICK ───────────────────────────────────────
     simulation.on('tick', () => {
       simTime++;
-      ponds.attr('transform', d => `translate(${d.x},${d.y})`);
+      nodeSel.each(function (d) {
+        if (d.category === 'creek') redrawCreek(d);          // absolute ribbon
+        else this.setAttribute('transform', `translate(${d.x},${d.y})`);
+      });
       // re-derive the flow topology every few ticks; redraw geometry each tick
       if (simTime % 10 === 0) updateThreads();
       drawThreadGeometry();
@@ -314,14 +325,18 @@ function buildDefs(svg) {
     stops.forEach(s => g.append('stop')
       .attr('offset', s[0]).attr('stop-color', s[1]).attr('stop-opacity', s[2]));
   };
-  grad('water-a', [['0%', '#3f97c0', 0.34], ['55%', '#123c54', 0.42], ['100%', '#07182a', 0.30]]);
-  grad('water-b', [['0%', '#2f86ad', 0.32], ['60%', '#0f3147', 0.42], ['100%', '#081e30', 0.32]]);
-  // deeper / mine-fed ponds — colder, with a faint carbide warmth at the core
-  grad('water-deep', [['0%', '#2a6f92', 0.30], ['40%', '#0e2c40', 0.44], ['100%', '#05101c', 0.46]]);
+  // murky pond water — green sludge over silt, more stops so it reads
+  // organic rather than a clean two-colour ramp
+  grad('water-a', [['0%', '#4f9e72', 0.32], ['34%', '#2e7256', 0.36], ['62%', '#163f30', 0.44], ['100%', '#0a1d14', 0.32]]);
+  grad('water-b', [['0%', '#43936a', 0.30], ['30%', '#266048', 0.36], ['66%', '#143829', 0.44], ['100%', '#0b241a', 0.34]]);
+  // deeper / mine-fed ponds — siltier, a warmer sediment tone in the deep
+  grad('water-deep', [['0%', '#357a5c', 0.30], ['36%', '#16402e', 0.44], ['70%', '#22281a', 0.44], ['100%', '#070f0a', 0.46]]);
+  // rusty, iron-stained water — the mine and the slurry spill
+  grad('water-rust', [['0%', '#a85f37', 0.34], ['42%', '#5e3017', 0.46], ['100%', '#1d0d06', 0.44]]);
 }
 
 function waterFillFor(d) {
-  if (/mine|coal|fiery|karst|charge/.test(d.id)) return 'url(#water-deep)';
+  if (d._rust) return 'url(#water-rust)';            // mine-g + slurry spill
   return d._gradParity ? 'url(#water-b)' : 'url(#water-a)';
 }
 
@@ -335,24 +350,37 @@ function computeBoundary(d, i) {
   const words = (d.surfaceWords || []).slice(0, Math.min((d.surfaceWords || []).length, 11));
   const N = Math.max(words.length, 1);
   const seed = i * 1.618 + 0.5;
-  const shape = d.shape;
-  const aspectX = shape === 'elongated' ? 1.45 : shape === 'wide' ? 1.7 : shape === 'narrow' ? 0.62 : 1.0;
-  const aspectY = shape === 'elongated' ? 0.7 : shape === 'wide' ? 0.6 : shape === 'narrow' ? 1.25 : 1.0;
+  const cat = d.category;
   d._gradParity = i % 2;
+
+  // shape per category: ponds = elongated valley lakes with lobes/fingers;
+  // pools = small, gently irregular; mine = compact, squarish entrance.
+  let aspectX, aspectY, rot;
+  if (cat === 'pond') { aspectX = 0.74; aspectY = 1.48; rot = seed; }
+  else if (cat === 'mine') { aspectX = 0.96; aspectY = 1.08; rot = 0; }
+  else { aspectX = 1.0; aspectY = 0.96; rot = seed * 0.5; }   // pool
+  const ca = Math.cos(rot), sa = Math.sin(rot);
 
   const out = [];
   for (let k = 0; k < N; k++) {
     const angle = (k / N) * Math.PI * 2 + seed * 0.3;
-    const wob = 0.92
-      + 0.13 * Math.sin(seed + angle * 1.8)
-      + 0.06 * Math.cos(seed * 1.4 + angle * 3.1);
+    let wob;
+    if (cat === 'pond') {
+      wob = 0.85
+        + 0.22 * Math.sin(seed + angle)              // big lobe
+        + 0.11 * Math.sin(seed * 1.7 + angle * 2.0)  // finger
+        + 0.06 * Math.cos(angle * 3.0 + seed);       // shore ripple
+    } else if (cat === 'mine') {
+      wob = 0.9 + 0.06 * Math.sin(seed + angle * 2.0) + 0.04 * Math.cos(angle * 3.0);
+    } else {
+      wob = 0.9 + 0.12 * Math.sin(seed + angle * 1.8) + 0.06 * Math.cos(seed * 1.4 + angle * 3.1);
+    }
     const rr = d.radius * wob;
-    out.push({
-      w: words[k] || '',
-      angle,
-      ax: Math.cos(angle) * rr * aspectX,
-      ay: Math.sin(angle) * rr * aspectY,
-    });
+    const ex = Math.cos(angle) * rr * aspectX;
+    const ey = Math.sin(angle) * rr * aspectY;
+    const ax = ex * ca - ey * sa;                    // rotate the silhouette
+    const ay = ex * sa + ey * ca;
+    out.push({ w: words[k] || '', angle: Math.atan2(ay, ax), ax, ay });
   }
   return out;
 }
@@ -427,57 +455,140 @@ function closedBlob(pts) {
   return d + ' Z';
 }
 
+// ── CREEKS (flowing channels between the two nearest ponds) ───
+// A creek grabs the two nearest pond/pool nodes *at the moment* and flows
+// between them as a sinuous channel that bows through the creek's own
+// (draggable) position. Words drift along the current. Still clickable.
+
+function buildCreek(g, d) {
+  g.append('path').attr('class', 'creek-channel');
+  g.append('path').attr('class', 'creek-current');
+  g.append('g').attr('class', 'creek-words')
+    .selectAll('text').data(d._creekWords).join('text')
+    .attr('class', 'boundary-word creek-word').text(w => w);
+  g.append('text').attr('class', 'pond-label');
+  g.append('text').attr('class', 'pond-sublabel');
+  redrawCreek(d);
+}
+
+function dist2(a, b) { const dx = a.x - b.x, dy = a.y - b.y; return dx * dx + dy * dy; }
+
+function anchorTwoNearest(d) {
+  const cands = nodeData.nodes
+    .filter(n => n.category === 'pond' || n.category === 'pool')
+    .sort((a, b) => dist2(a, d) - dist2(b, d));
+  return [cands[0], cands[1]];
+}
+
+function quadAt(ax, ay, px, py, bx, by, t) {
+  const u = 1 - t;
+  return { x: u * u * ax + 2 * u * t * px + t * t * bx, y: u * u * ay + 2 * u * t * py + t * t * by };
+}
+function quadTangent(ax, ay, px, py, bx, by, t) {
+  const u = 1 - t;
+  return { x: 2 * u * (px - ax) + 2 * t * (bx - px), y: 2 * u * (py - ay) + 2 * t * (by - py) };
+}
+
+function redrawCreek(d) {
+  const g = d._g;
+  const [a, b] = anchorTwoNearest(d);
+  if (!a || !b) return;
+
+  // quadratic control so the channel bows through the creek's own position
+  const px = 2 * d.x - (a.x + b.x) / 2;
+  const py = 2 * d.y - (a.y + b.y) / 2;
+  const path = `M${a.x.toFixed(1)},${a.y.toFixed(1)} Q${px.toFixed(1)},${py.toFixed(1)} ${b.x.toFixed(1)},${b.y.toFixed(1)}`;
+  g.select('.creek-channel').attr('d', path);
+  g.select('.creek-current').attr('d', path);
+
+  // rust bleeds in when the channel meets the mine or the slurry spill
+  g.classed('rust', !!(a._rust || b._rust || d._rust));
+
+  // words flow along the current, tangent to the curve
+  const words = g.select('.creek-words').selectAll('text');
+  const n = words.size();
+  words.each(function (w, i) {
+    const t = 0.2 + 0.6 * (n > 1 ? i / (n - 1) : 0.5);
+    const pt = quadAt(a.x, a.y, px, py, b.x, b.y, t);
+    const tan = quadTangent(a.x, a.y, px, py, b.x, b.y, t);
+    let deg = Math.atan2(tan.y, tan.x) * 180 / Math.PI;
+    const norm = ((deg % 360) + 360) % 360;
+    if (norm > 90 && norm < 270) deg += 180;       // keep words upright
+    this.setAttribute('transform', `translate(${pt.x.toFixed(1)},${(pt.y - 9).toFixed(1)}) rotate(${deg.toFixed(1)})`);
+  });
+
+  // label rides at the creek's own position
+  g.select('.pond-label').attr('x', d.x.toFixed(1)).attr('y', (d.y + 16).toFixed(1)).text(d.title);
+  g.select('.pond-sublabel').attr('x', d.x.toFixed(1)).attr('y', (d.y + 30).toFixed(1)).text(d.subtitle);
+}
+
 // ── MUTABLE FLOW (proximity-derived threads) ──────────
+
+function pairKey(a, b) { return a < b ? `${a}|${b}` : `${b}|${a}`; }
 
 function updateThreads() {
   if (!nodeData) return;
   const ns = nodeData.nodes;
+  // only ponds + pools take part in the general drainage; creeks ARE
+  // channels, and the mine stands apart (its one link is forced below).
+  const flow = ns.filter(n => n.category === 'pond' || n.category === 'pool');
   const deg = {};
-  ns.forEach(n => deg[n.id] = 0);
+  flow.forEach(n => deg[n.id] = 0);
+
+  // pairs a creek currently occupies — don't also draw a thread there
+  const creekPairs = new Set();
+  ns.filter(n => n.category === 'creek').forEach(c => {
+    const [a, b] = anchorTwoNearest(c);
+    if (a && b) creekPairs.add(pairKey(a.id, b.id));
+  });
 
   const pairs = [];
-  for (let a = 0; a < ns.length; a++) {
-    for (let b = a + 1; b < ns.length; b++) {
-      const dx = ns[a].x - ns[b].x, dy = ns[a].y - ns[b].y;
-      pairs.push({ a: ns[a], b: ns[b], dist: Math.hypot(dx, dy) });
-    }
-  }
+  for (let i = 0; i < flow.length; i++)
+    for (let j = i + 1; j < flow.length; j++)
+      pairs.push({ a: flow[i], b: flow[j], dist: Math.hypot(flow[i].x - flow[j].x, flow[i].y - flow[j].y) });
   pairs.sort((p, q) => p.dist - q.dist);
 
   const edges = [];
   pairs.forEach(p => {
+    if (creekPairs.has(pairKey(p.a.id, p.b.id))) return;   // the creek is the channel here
     const lim = p.a.radius + p.b.radius + 240;
     if (p.dist <= lim && deg[p.a.id] < 3 && deg[p.b.id] < 3) {
       edges.push(p); deg[p.a.id]++; deg[p.b.id]++;
     }
   });
-  // never strand a pond: link any isolated node to its nearest neighbour
-  ns.forEach(n => {
+  // never strand a pool
+  flow.forEach(n => {
     if (deg[n.id] > 0) return;
     let best = null, bd = Infinity;
-    ns.forEach(m => {
-      if (m === n) return;
-      const dd = Math.hypot(n.x - m.x, n.y - m.y);
-      if (dd < bd) { bd = dd; best = m; }
-    });
-    if (best) { edges.push({ a: n, b: best, dist: bd }); deg[n.id]++; deg[best.id]++; }
+    flow.forEach(m => { if (m === n) return; const dd = dist2(n, m); if (dd < bd) { bd = dd; best = m; } });
+    if (best) { edges.push({ a: n, b: best, dist: Math.sqrt(bd) }); deg[n.id]++; deg[best.id]++; }
   });
 
-  const key = e => e.a.id < e.b.id ? `${e.a.id}|${e.b.id}` : `${e.b.id}|${e.a.id}`;
+  // the mine's one fixed, rusty channel to the slurry spill
+  const mine = ns.find(n => n.id === 'mine-g');
+  const spill = ns.find(n => n.id === 'coal-fly-ash');
+  if (mine && spill) edges.push({ a: mine, b: spill, dist: Math.hypot(mine.x - spill.x, mine.y - spill.y) });
+
+  // rust bleeds into any thread touching the mine or the spill
+  edges.forEach(e => { e.rust = !!(e.a._rust || e.b._rust); });
+
+  const key = e => pairKey(e.a.id, e.b.id);
 
   threadGlowSel = threadGlowSel.data(edges, key);
   threadGlowSel.exit().transition().duration(800).style('opacity', 0).remove();
   threadGlowSel = threadGlowSel.enter().append('path')
     .attr('class', 'drainage-thread-glow').style('opacity', 0)
     .call(s => s.transition().duration(900).style('opacity', 0.3))
-    .merge(threadGlowSel);
+    .merge(threadGlowSel)
+    .classed('rust', e => !!e.rust);
 
   threadSel = threadSel.data(edges, key);
   threadSel.exit().transition().duration(800).style('opacity', 0).remove();
   threadSel = threadSel.enter().append('path')
     .attr('class', 'drainage-thread').style('opacity', 0)
     .call(s => s.transition().duration(900).style('opacity', 1))
-    .merge(threadSel);
+    .merge(threadSel)
+    .classed('rust', e => !!e.rust);
 }
 
 function drawThreadGeometry() {

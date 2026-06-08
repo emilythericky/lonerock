@@ -1,55 +1,55 @@
 @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Courier+Prime:ital@0;1&display=swap');
 
 :root {
-  /* ── WATER (surface) — dark water, blues, translucency ─────── */
-  --bg: #05080d;
-  --deep-water: #07111c;
-  --water-dark: #0a1c2e;
-  --water-mid: #103247;
-  --water-light: #1b5673;
-  --water-bright: #2f86ad;
-  --surface-water: rgba(28, 86, 120, 0.32);
+  /* ── WATER (surface) — dark pond water, green-blue, sludge ─── */
+  --bg: #060a07;
+  --deep-water: #08140f;
+  --water-dark: #0b2019;
+  --water-mid: #123a30;
+  --water-light: #22604c;
+  --water-bright: #3f9a78;
+  --surface-water: rgba(40, 110, 86, 0.32);
 
-  /* ── MINE / DEPTH — coal, carbide, fire, sediment ─────────── */
-  --stone: #14161c;
-  --shale: #1a1c22;
-  --coal: #0a0a0d;
-  --limestone: #232730;
-  --clay: #2c2114;
-  --sediment: #2a2418;
-  --carbide: #f0a63c;      /* carbide-lamp flame */
-  --carbide-dim: #6a4416;
-  --ember: #c9491f;        /* mine fire */
-  --rust: #8a4a2a;
+  /* ── MINE / DEPTH — coal, carbide, fire, olive sediment ───── */
+  --stone: #15170f;
+  --shale: #1b1d12;
+  --coal: #0a0b07;
+  --limestone: #24281b;
+  --clay: #2a2611;
+  --sediment: #272613;
+  --carbide: #eea63a;      /* carbide-lamp flame */
+  --carbide-dim: #645012;
+  --ember: #c45a22;        /* mine fire */
+  --rust: #87532a;
 
-  --text: #cdd7dd;
-  --text-muted: #6d7d88;
-  --text-dim: #313e47;
-  --text-water: #9cc3d8;
+  --text: #cdd9cc;
+  --text-muted: #74867a;
+  --text-dim: #34433a;
+  --text-water: #a6cdb4;
 
-  --ochre: #d89a4a;        /* carbide warmth for headings */
-  --ochre-dim: #5a3c14;
-  --ash: #5a6670;
-  --ash-light: #93a3ad;
+  --ochre: #cfa64e;        /* carbide warmth for headings */
+  --ochre-dim: #54450f;
+  --ash: #5e6a5a;
+  --ash-light: #97a795;
 
-  /* watery accents (replace the old greens) */
-  --water-green: #3f8fb0;
-  --pond-green: rgba(40, 110, 150, 0.5);
-  --algae: #2f7da3;
-  --lichen: #4a6f80;
-  --usnea: rgba(150, 188, 205, 0.42);
+  /* sludge accents */
+  --water-green: #46977a;
+  --pond-green: rgba(48, 122, 92, 0.5);
+  --algae: #4f8a4a;
+  --lichen: #5c7048;
+  --usnea: rgba(168, 196, 150, 0.42);
 
-  --thread: rgba(70, 140, 185, 0.32);
-  --thread-bright: rgba(120, 195, 235, 0.6);
+  --thread: rgba(78, 150, 112, 0.32);
+  --thread-bright: rgba(130, 210, 160, 0.6);
 
-  --border: rgba(60, 100, 125, 0.2);
-  --border-strong: rgba(90, 150, 180, 0.32);
+  --border: rgba(70, 115, 90, 0.2);
+  --border-strong: rgba(105, 160, 120, 0.32);
 
-  --panel-bg: #081019;
-  --geology-bg: #0a0805;
-  --geology-layer-1: #11100c;
-  --geology-layer-2: #161310;
-  --geology-layer-3: #1e1a14;
+  --panel-bg: #0a1410;
+  --geology-bg: #0a0a05;
+  --geology-layer-1: #11110a;
+  --geology-layer-2: #16140e;
+  --geology-layer-3: #1e1c12;
 }
 
 *, *::before, *::after {
@@ -82,7 +82,7 @@ body {
   padding: 80px 24px 60px;
   position: relative;
   overflow: hidden;
-  background: radial-gradient(ellipse at 30% 60%, #0c2031 0%, #05080d 62%);
+  background: radial-gradient(ellipse at 30% 60%, #0d241a 0%, #060a07 62%);
 }
 
 #membrane::before {
@@ -170,53 +170,39 @@ h1.project-title {
   will-change: border-radius, transform;
   padding: 0;
   cursor: pointer;
-  /* deep water sinkhole: lit rim, dark falling centre */
+  /* a water droplet: a crisp specular glint up top, a dark translucent
+     body, and a bright refractive caustic pooling at the lower edge
+     where light focuses through the lens — not an even spherical shade */
   background:
-    radial-gradient(circle at 50% 42%,
-      #03070c 0%,
-      #061320 34%,
-      #0c2c41 66%,
-      rgba(35, 96, 128, 0.55) 86%,
-      rgba(60, 150, 195, 0.18) 100%);
+    /* soft sheen — a faint gather of light up top, no hard glint */
+    radial-gradient(ellipse 56% 44% at 44% 32%, rgba(150, 222, 188, 0.13) 0%, transparent 60%),
+    /* refractive caustic gathering at the base */
+    radial-gradient(ellipse 56% 34% at 58% 83%, rgba(96, 214, 150, 0.28) 0%, rgba(60, 168, 116, 0.1) 42%, transparent 72%),
+    /* bright Fresnel rim */
+    radial-gradient(circle at 50% 50%, transparent 68%, rgba(94, 196, 150, 0.2) 90%, rgba(130, 214, 172, 0.1) 100%),
+    /* the deep translucent body / hole */
+    radial-gradient(circle at 50% 52%, #05110b 0%, #07180f 38%, #0c2c20 72%, rgba(34, 100, 74, 0.5) 90%, rgba(60, 150, 110, 0.16) 100%);
   box-shadow:
-    inset 0 8px 60px rgba(0, 0, 0, 0.85),
-    inset 0 -4px 30px rgba(40, 110, 150, 0.2),
-    0 0 70px rgba(24, 70, 100, 0.35);
+    inset 0 10px 52px rgba(0, 0, 0, 0.82),
+    inset 0 -10px 42px rgba(64, 176, 124, 0.22),
+    inset 6px 4px 22px rgba(150, 224, 184, 0.10),
+    0 0 80px rgba(30, 96, 66, 0.4);
   animation: lacuna-morph 11s ease-in-out infinite, lacuna-breathe 7s ease-in-out infinite;
   transition: box-shadow 0.6s ease, transform 0.6s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* slow caustic shimmer rotating over the surface */
-.lacuna::before {
-  content: '';
-  position: absolute;
-  inset: 4%;
-  border-radius: inherit;
-  background:
-    conic-gradient(from 0deg,
-      transparent 0deg,
-      rgba(90, 170, 210, 0.10) 60deg,
-      transparent 120deg,
-      rgba(70, 150, 195, 0.08) 200deg,
-      transparent 280deg,
-      rgba(110, 190, 225, 0.10) 340deg,
-      transparent 360deg);
-  mix-blend-mode: screen;
-  animation: lacuna-spin 22s linear infinite;
-  pointer-events: none;
-}
-
 .lacuna:hover {
   box-shadow:
-    inset 0 10px 80px rgba(0, 0, 0, 0.9),
-    inset 0 -4px 36px rgba(50, 130, 175, 0.28),
-    0 0 100px rgba(40, 110, 155, 0.5);
+    inset 0 12px 70px rgba(0, 0, 0, 0.88),
+    inset 0 -12px 48px rgba(74, 196, 138, 0.3),
+    inset 6px 4px 24px rgba(160, 232, 190, 0.14),
+    0 0 110px rgba(46, 130, 88, 0.5);
   transform: scale(1.03);
 }
 
 .lacuna:focus-visible {
-  outline: 1px solid rgba(120, 190, 225, 0.5);
+  outline: 1px solid rgba(130, 210, 165, 0.5);
   outline-offset: 14px;
 }
 
@@ -225,7 +211,7 @@ h1.project-title {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  border: 1px solid rgba(120, 190, 225, 0.4);
+  border: 1px solid rgba(124, 206, 158, 0.4);
   pointer-events: none;
   animation: lacuna-ripple 5s ease-out infinite;
 }
@@ -243,7 +229,7 @@ h1.project-title {
 }
 
 .lacuna-wrap:hover .lacuna-caption {
-  color: #9fd4ec;
+  color: #9fe0bc;
   letter-spacing: 0.26em;
 }
 
@@ -259,10 +245,6 @@ h1.project-title {
   40% { border-radius: 60% 40% 44% 56% / 56% 44% 58% 42%; }
   60% { border-radius: 44% 56% 53% 47% / 47% 54% 46% 54%; }
   80% { border-radius: 52% 48% 41% 59% / 58% 42% 55% 45%; }
-}
-
-@keyframes lacuna-spin {
-  to { transform: rotate(360deg); }
 }
 
 @keyframes lacuna-ripple {
@@ -362,9 +344,9 @@ h1.project-title {
   height: 100vh;
   position: relative;
   background:
-    radial-gradient(ellipse at 38% 42%, #11324a 0%, transparent 55%),
-    radial-gradient(ellipse at 72% 70%, #0a2235 0%, transparent 60%),
-    linear-gradient(180deg, #081a28 0%, #04080e 85%);
+    radial-gradient(ellipse at 38% 42%, #123e30 0%, transparent 55%),
+    radial-gradient(ellipse at 72% 70%, #0a2820 0%, transparent 60%),
+    linear-gradient(180deg, #0a201a 0%, #050a07 85%);
   overflow: hidden;
 }
 
@@ -376,9 +358,9 @@ h1.project-title {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 20% 30%, rgba(60, 150, 200, 0.05) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 65%, rgba(40, 110, 160, 0.07) 0%, transparent 45%),
-    radial-gradient(ellipse at 50% 80%, rgba(50, 130, 175, 0.04) 0%, transparent 40%);
+    radial-gradient(ellipse at 20% 30%, rgba(70, 170, 120, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 65%, rgba(50, 140, 100, 0.07) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 80%, rgba(60, 150, 110, 0.04) 0%, transparent 40%);
   pointer-events: none;
   animation: caustic-shift 14s ease-in-out infinite;
   mix-blend-mode: screen;
@@ -441,7 +423,7 @@ h1.project-title {
 
 /* the translucent water body — outline is the word ring */
 .pond-water {
-  stroke: rgba(120, 190, 225, 0.28);
+  stroke: rgba(124, 206, 158, 0.28);
   stroke-width: 1;
   transition: opacity 0.4s ease;
   opacity: 0.92;
@@ -449,16 +431,16 @@ h1.project-title {
 
 .pond-body:hover .pond-water {
   opacity: 1;
-  stroke: rgba(150, 215, 245, 0.5);
+  stroke: rgba(152, 230, 180, 0.5);
 }
 
 /* soft glow aura beneath the water */
 .pond-aura {
-  fill: rgba(40, 120, 165, 0.10);
+  fill: rgba(44, 134, 96, 0.10);
   pointer-events: none;
 }
 
-.pond-body:hover .pond-aura { fill: rgba(60, 150, 200, 0.16); }
+.pond-body:hover .pond-aura { fill: rgba(64, 166, 116, 0.16); }
 
 .pond-label {
   fill: var(--text-water);
@@ -493,7 +475,7 @@ h1.project-title {
   transition: fill 0.25s, opacity 0.25s;
   user-select: none;
   paint-order: stroke;
-  stroke: rgba(6, 16, 26, 0.85);
+  stroke: rgba(6, 18, 12, 0.85);
   stroke-width: 2.4px;
 }
 
@@ -515,6 +497,38 @@ h1.project-title {
   opacity: 0.3;
 }
 
+/* rust — the mine + slurry-spill contamination bleeding through the flow */
+.drainage-thread.rust { stroke: rgba(180, 94, 52, 0.46); }
+.drainage-thread-glow.rust { stroke: rgba(216, 122, 68, 0.55); }
+
+/* ── CREEKS — flowing channels ───────────────────────── */
+.creek-body { cursor: pointer; }
+
+.creek-channel {
+  fill: none;
+  stroke: rgba(74, 158, 118, 0.18);
+  stroke-width: 15;
+  stroke-linecap: round;
+  transition: stroke 0.3s;
+}
+
+.creek-current {
+  fill: none;
+  stroke: var(--thread-bright);
+  stroke-width: 3;
+  stroke-linecap: round;
+  opacity: 0.72;
+  transition: opacity 0.3s;
+}
+
+.creek-body:hover .creek-channel { stroke: rgba(96, 188, 142, 0.28); }
+.creek-body:hover .creek-current { opacity: 1; }
+
+.creek-word { cursor: pointer; }
+
+.creek-body.rust .creek-channel { stroke: rgba(152, 84, 50, 0.34); }
+.creek-body.rust .creek-current { stroke: rgba(202, 114, 66, 0.85); }
+
 /* Mycelial / usnea filaments stitching word-end → next word-start */
 .filament {
   fill: none;
@@ -525,20 +539,20 @@ h1.project-title {
   opacity: 0.72;
 }
 
-.pond-body:hover .filament { opacity: 0.95; stroke: rgba(185, 220, 235, 0.7); }
+.pond-body:hover .filament { opacity: 0.95; stroke: rgba(190, 226, 178, 0.7); }
 
 /* usnea fruiting tips where the first/last letters meet */
 .fruiting-tip {
-  fill: rgba(175, 208, 222, 0.65);
+  fill: rgba(182, 214, 168, 0.65);
   pointer-events: none;
 }
 
-.pond-body:hover .fruiting-tip { fill: rgba(205, 235, 250, 0.85); }
+.pond-body:hover .fruiting-tip { fill: rgba(210, 238, 196, 0.85); }
 
 /* Ripple rings */
 .ripple-ring {
   fill: none;
-  stroke: rgba(110, 185, 225, 0.16);
+  stroke: rgba(112, 196, 150, 0.16);
   stroke-width: 0.5;
   animation: ripple-out 4s ease-out infinite;
   pointer-events: none;
@@ -662,37 +676,44 @@ h1.project-title {
   position: sticky;
   top: 0;
   align-self: flex-start;
-  width: 14px;
+  width: 16px;
   height: 100vh;
   flex-shrink: 0;
-  background: linear-gradient(
-    180deg,
-    #1b5673 0%,           /* surface water */
-    #103247 12%,
-    #0a1c2e 20%,          /* dark water */
-    #2c2114 30%,          /* sediment / clay */
-    #1a1206 46%,
-    #0a0a0d 58%,          /* coal seam */
-    #c9491f 70%,          /* mine fire / carbide flame */
-    #6a4416 80%,
-    #0a0805 100%          /* bedrock */
-  );
+  /* an extracted earth core: distinct strata bands (not a smooth ramp),
+     overlaid with near-vertical drill grain */
+  background:
+    repeating-linear-gradient(91deg,
+      rgba(255, 255, 255, 0.035) 0px, rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px, transparent 3px,
+      rgba(0, 0, 0, 0.12) 3px, rgba(0, 0, 0, 0.12) 4px,
+      transparent 4px, transparent 7px),
+    linear-gradient(180deg,
+      #2a6450 0%,   #205040 8%,    /* surface water → sludge */
+      #163d31 8%,   #102a22 15%,   /* dark pond water */
+      #0c2018 15%,  #0c2018 20%,
+      #3a3017 20%,  #2c2611 28%,   /* silt / clay */
+      #43361a 28%,  #352a14 35%,   /* sandy sediment */
+      #211608 35%,  #1a1206 44%,   /* shale */
+      #0b0c07 44%,  #0a0a06 57%,   /* coal seam (thick) */
+      #4a2410 57%,  #6e3014 63%,   /* scorched measure */
+      #c45a22 63%,  #b14e1d 68%,   /* mine fire / carbide */
+      #5e3413 68%,  #2a1d0c 79%,   /* cooling */
+      #14120b 79%,  #0d0d07 92%,   /* bedrock */
+      #080804 92%,  #080804 100%);
   border-right: 1px solid var(--border);
   z-index: 5;
 }
 
 .core-gauge::after {
-  /* striated mineral lines over the gradient */
+  /* irregular bedding planes — slightly off-horizontal, two scales */
   content: '';
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(
-    180deg,
-    transparent 0px,
-    transparent 11px,
-    rgba(0,0,0,0.35) 11px,
-    rgba(0,0,0,0.35) 12px
-  );
+  background:
+    repeating-linear-gradient(178.5deg,
+      transparent 0 9px, rgba(0, 0, 0, 0.3) 9px 10px),
+    repeating-linear-gradient(180.8deg,
+      transparent 0 16px, rgba(255, 255, 255, 0.045) 16px 17px);
   mix-blend-mode: multiply;
 }
 
@@ -732,7 +753,7 @@ h1.project-title {
 
 /* Stratum 1 — WATER (the poem) */
 .stratum.water {
-  background: linear-gradient(180deg, #0d2a3e 0%, var(--water-dark) 60%, var(--panel-bg) 100%);
+  background: linear-gradient(180deg, #103a2c 0%, var(--water-dark) 60%, var(--panel-bg) 100%);
 }
 
 .stratum.water .stratum-body {

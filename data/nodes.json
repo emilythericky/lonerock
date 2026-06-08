@@ -10,7 +10,25 @@
       "shape": "irregular",
       "contentPath": "content/nodes/pond-1.md",
       "stub": false,
-      "surfaceWords": ["esturial", "consideration", "wings", "alternate", "direction", "sycamores", "whisper", "holler", "stockade", "shadows", "gather", "breath", "together", "decision", "accumulates", "scattering"]
+      "surfaceWords": [
+        "esturial",
+        "consideration",
+        "wings",
+        "alternate",
+        "direction",
+        "sycamores",
+        "whisper",
+        "holler",
+        "stockade",
+        "shadows",
+        "gather",
+        "breath",
+        "together",
+        "decision",
+        "accumulates",
+        "scattering"
+      ],
+      "category": "pond"
     },
     {
       "id": "pond-2",
@@ -22,7 +40,22 @@
       "shape": "elongated",
       "contentPath": "content/nodes/pond-2.md",
       "stub": false,
-      "surfaceWords": ["bat", "sonar", "cicadas", "generations", "spectrum", "black", "walnut", "maybe", "listen", "spread", "absent", "evenly", "done"]
+      "surfaceWords": [
+        "bat",
+        "sonar",
+        "cicadas",
+        "generations",
+        "spectrum",
+        "black",
+        "walnut",
+        "maybe",
+        "listen",
+        "spread",
+        "absent",
+        "evenly",
+        "done"
+      ],
+      "category": "pond"
     },
     {
       "id": "pond-3",
@@ -34,7 +67,24 @@
       "shape": "wide",
       "contentPath": "content/nodes/pond-3.md",
       "stub": false,
-      "surfaceWords": ["small", "often", "green", "tiger", "frog", "belch", "permable", "kvetch", "limestone", "filter", "impurities", "turtle", "shell", "permanent", "sought"]
+      "surfaceWords": [
+        "small",
+        "often",
+        "green",
+        "tiger",
+        "frog",
+        "belch",
+        "permable",
+        "kvetch",
+        "limestone",
+        "filter",
+        "impurities",
+        "turtle",
+        "shell",
+        "permanent",
+        "sought"
+      ],
+      "category": "pond"
     },
     {
       "id": "pond-6",
@@ -46,7 +96,22 @@
       "shape": "round",
       "contentPath": "content/nodes/pond-6.md",
       "stub": false,
-      "surfaceWords": ["compliant", "survive", "object", "soul", "unlucky", "water", "snake", "child", "rock", "sin", "sharing", "species", "cop"]
+      "surfaceWords": [
+        "compliant",
+        "survive",
+        "object",
+        "soul",
+        "unlucky",
+        "water",
+        "snake",
+        "child",
+        "rock",
+        "sin",
+        "sharing",
+        "species",
+        "cop"
+      ],
+      "category": "pond"
     },
     {
       "id": "deep-creek",
@@ -58,7 +123,26 @@
       "shape": "flowing",
       "contentPath": "content/nodes/deep-creek.md",
       "stub": false,
-      "surfaceWords": ["small", "often", "abscess", "conglomerate", "asylum", "radge", "rainbow", "sucking", "neon", "mines", "nine", "days", "rainbows", "stitch", "bloom", "gutting", "baptists"]
+      "surfaceWords": [
+        "small",
+        "often",
+        "abscess",
+        "conglomerate",
+        "asylum",
+        "radge",
+        "rainbow",
+        "sucking",
+        "neon",
+        "mines",
+        "nine",
+        "days",
+        "rainbows",
+        "stitch",
+        "bloom",
+        "gutting",
+        "baptists"
+      ],
+      "category": "creek"
     },
     {
       "id": "mine-g",
@@ -70,7 +154,25 @@
       "shape": "narrow",
       "contentPath": "content/nodes/mine-g.md",
       "stub": false,
-      "surfaceWords": ["snail", "spit", "strips", "fiddle", "ferns", "body", "lung", "heartfelt", "sediment", "stomach", "milligrams", "liver", "flute", "Helper", "Narcan", "wool"]
+      "surfaceWords": [
+        "snail",
+        "spit",
+        "strips",
+        "fiddle",
+        "ferns",
+        "body",
+        "lung",
+        "heartfelt",
+        "sediment",
+        "stomach",
+        "milligrams",
+        "liver",
+        "flute",
+        "Helper",
+        "Narcan",
+        "wool"
+      ],
+      "category": "mine"
     },
     {
       "id": "overflow",
@@ -82,7 +184,20 @@
       "shape": "spill",
       "contentPath": "content/nodes/overflow.md",
       "stub": false,
-      "surfaceWords": ["guilt", "brim", "unifying", "water", "table", "shore", "earth", "speech", "cupping", "hands", "drinking"]
+      "surfaceWords": [
+        "guilt",
+        "brim",
+        "unifying",
+        "water",
+        "table",
+        "shore",
+        "earth",
+        "speech",
+        "cupping",
+        "hands",
+        "drinking"
+      ],
+      "category": "pool"
     },
     {
       "id": "coal-fly-ash",
@@ -90,11 +205,30 @@
       "subtitle": "the aftermath",
       "x": 0.35,
       "y": 0.88,
-      "radius": 100,
+      "radius": 76,
       "shape": "spreading",
       "contentPath": "content/nodes/coal-fly-ash.md",
       "stub": false,
-      "surfaceWords": ["Soddy-Daisy", "Reliance", "rain", "pond", "candle", "spreads", "coal", "ash", "purpling", "watercress", "crickets", "rutting", "parsley", "cervix", "heifer", "egret", "algal"]
+      "surfaceWords": [
+        "Soddy-Daisy",
+        "Reliance",
+        "rain",
+        "pond",
+        "candle",
+        "spreads",
+        "coal",
+        "ash",
+        "purpling",
+        "watercress",
+        "crickets",
+        "rutting",
+        "parsley",
+        "cervix",
+        "heifer",
+        "egret",
+        "algal"
+      ],
+      "category": "pool"
     },
     {
       "id": "fiery-gizzard",
@@ -106,7 +240,24 @@
       "shape": "cave",
       "contentPath": "content/nodes/fiery-gizzard.md",
       "stub": false,
-      "surfaceWords": ["syphilitic", "bituminous", "plume", "bats", "burped", "crushed", "eyelids", "defeated", "caves", "white", "mossy", "syndrome", "mouths", "human", "participants"]
+      "surfaceWords": [
+        "syphilitic",
+        "bituminous",
+        "plume",
+        "bats",
+        "burped",
+        "crushed",
+        "eyelids",
+        "defeated",
+        "caves",
+        "white",
+        "mossy",
+        "syndrome",
+        "mouths",
+        "human",
+        "participants"
+      ],
+      "category": "creek"
     },
     {
       "id": "charge",
@@ -118,7 +269,26 @@
       "shape": "shotgun",
       "contentPath": "content/nodes/charge.md",
       "stub": false,
-      "surfaceWords": ["house", "Walking", "District", "Belmont", "nurse", "Sierra", "Leone", "lion", "skin", "masks", "morphine", "Alabama", "summer", "shotgun", "fungus", "powder", "ashes"]
+      "surfaceWords": [
+        "house",
+        "Walking",
+        "District",
+        "Belmont",
+        "nurse",
+        "Sierra",
+        "Leone",
+        "lion",
+        "skin",
+        "masks",
+        "morphine",
+        "Alabama",
+        "summer",
+        "shotgun",
+        "fungus",
+        "powder",
+        "ashes"
+      ],
+      "category": "creek"
     },
     {
       "id": "karst",
@@ -130,27 +300,102 @@
       "shape": "irregular",
       "contentPath": "content/nodes/karst.md",
       "stub": false,
-      "surfaceWords": ["dozers", "land", "forget", "bunker", "MREs", "doghole", "saltpeter", "Lucifuga", "Fallout", "polje", "percolating", "Eurycea", "karst", "silica", "bituminous", "Ham", "rust", "Jass", "springs"]
+      "surfaceWords": [
+        "dozers",
+        "land",
+        "forget",
+        "bunker",
+        "MREs",
+        "doghole",
+        "saltpeter",
+        "Lucifuga",
+        "Fallout",
+        "polje",
+        "percolating",
+        "Eurycea",
+        "karst",
+        "silica",
+        "bituminous",
+        "Ham",
+        "rust",
+        "Jass",
+        "springs"
+      ],
+      "category": "creek"
     }
   ],
   "links": [
-    { "source": "pond-1", "target": "pond-3" },
-    { "source": "pond-1", "target": "mine-g" },
-    { "source": "pond-2", "target": "overflow" },
-    { "source": "pond-2", "target": "mine-g" },
-    { "source": "pond-3", "target": "deep-creek" },
-    { "source": "pond-3", "target": "coal-fly-ash" },
-    { "source": "pond-6", "target": "deep-creek" },
-    { "source": "pond-6", "target": "overflow" },
-    { "source": "mine-g", "target": "pond-6" },
-    { "source": "deep-creek", "target": "coal-fly-ash" },
-    { "source": "deep-creek", "target": "fiery-gizzard" },
-    { "source": "coal-fly-ash", "target": "charge" },
-    { "source": "fiery-gizzard", "target": "pond-6" },
-    { "source": "charge", "target": "pond-3" },
-    { "source": "karst", "target": "mine-g" },
-    { "source": "karst", "target": "fiery-gizzard" },
-    { "source": "karst", "target": "deep-creek" },
-    { "source": "karst", "target": "overflow" }
+    {
+      "source": "pond-1",
+      "target": "pond-3"
+    },
+    {
+      "source": "pond-1",
+      "target": "mine-g"
+    },
+    {
+      "source": "pond-2",
+      "target": "overflow"
+    },
+    {
+      "source": "pond-2",
+      "target": "mine-g"
+    },
+    {
+      "source": "pond-3",
+      "target": "deep-creek"
+    },
+    {
+      "source": "pond-3",
+      "target": "coal-fly-ash"
+    },
+    {
+      "source": "pond-6",
+      "target": "deep-creek"
+    },
+    {
+      "source": "pond-6",
+      "target": "overflow"
+    },
+    {
+      "source": "mine-g",
+      "target": "pond-6"
+    },
+    {
+      "source": "deep-creek",
+      "target": "coal-fly-ash"
+    },
+    {
+      "source": "deep-creek",
+      "target": "fiery-gizzard"
+    },
+    {
+      "source": "coal-fly-ash",
+      "target": "charge"
+    },
+    {
+      "source": "fiery-gizzard",
+      "target": "pond-6"
+    },
+    {
+      "source": "charge",
+      "target": "pond-3"
+    },
+    {
+      "source": "karst",
+      "target": "mine-g"
+    },
+    {
+      "source": "karst",
+      "target": "fiery-gizzard"
+    },
+    {
+      "source": "karst",
+      "target": "deep-creek"
+    },
+    {
+      "source": "karst",
+      "target": "overflow"
+    }
   ]
 }
